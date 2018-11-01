@@ -24,7 +24,6 @@ pygame.display.set_caption('Submarine Game Test, Version 1.0')
 
 
 clock = pygame.time.Clock()
-crashed = False
 
 #Defining start and quit button variables
 sbutton = pygame.image.load("SP_Start.png")
@@ -33,7 +32,7 @@ def startbutton(x1,y1):
     gameDisplay.blit(sbutton, (x1,y1))
 
 x1 = display_width * 0.3
-y1 = display_height * 0.4
+y1 = display_height * 0.1
 
 qbutton = pygame.image.load("SP_Quit.png")
 
@@ -43,22 +42,35 @@ def quitbutton(x,y):
 x = display_width * 0.3
 y = display_height * 0.7
 
+opbutton = pygame.image.load("SP_Options.png")
+
+def optionsbutton(x2,y2):
+    gameDisplay.blit(opbutton, (x2,y2))
+
+x2 = display_width * 0.3
+y2 = display_height * 0.4
+
 def button(msg,x,y,w,h,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
 #Main function 
-while not crashed:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            crashed = True
+def main():
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
     
-    screen.fill(black)
-    screen.blit(background, backgroundrect)
-    startbutton(x1,y1)
-    quitbutton(x,y)
-    pygame.display.flip()
-   
+        screen.fill(black)
+        screen.blit(background, backgroundrect)
+        startbutton(x1,y1)
+        quitbutton(x,y)
+        optionsbutton(x2,y2)
+        pygame.display.flip()
+        clock.tick(60)
+if __name__ == '__main__':
+    main()
+    
 
 
 
