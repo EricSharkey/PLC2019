@@ -47,19 +47,20 @@ def button(msg,x,y,w,h,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
-#Main function 
-while not crashed:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            crashed = True
+#Main function
+def main():
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+        screen.fill(black)
+        screen.blit(background, backgroundrect)
+        startbutton(x1,y1)
+        quitbutton(x,y)
+        pygame.display.flip()
+        clock.tick(60)
     
-    screen.fill(black)
-    screen.blit(background, backgroundrect)
-    startbutton(x1,y1)
-    quitbutton(x,y)
-    pygame.display.flip()
-   
-
-
+if __name__== '__main__':
+    main()
 
 
