@@ -36,11 +36,11 @@ y1 = display_height * 0.1
 
 qbutton = pygame.image.load("SP_Quit.png")
 
-def quitbutton(x,y):
-    gameDisplay.blit(qbutton, (x,y))
+def quitbutton(x3,y3):
+    gameDisplay.blit(qbutton, (x3,y3))
 
-x = display_width * 0.3
-y = display_height * 0.7
+x3 = display_width * 0.3
+y3 = display_height * 0.7
 
 opbutton = pygame.image.load("SP_Options.png")
 
@@ -60,11 +60,21 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-    
+            if event.type == pygame.MOUSEBUTTONDOWN:
+              print (event.pos)
+              print (event.button)
+              if opbutton.get_rect(topleft=(x2,y2)).collidepoint(event.pos):
+                print ("Options")
+              if opbutton.get_rect(topleft=(x3,y3)).collidepoint(event.pos):
+                print ("Quit?")
+                pygame.quit()
+                return
+
+        
         screen.fill(black)
         screen.blit(background, backgroundrect)
         startbutton(x1,y1)
-        quitbutton(x,y)
+        quitbutton(x3,y3)
         optionsbutton(x2,y2)
         pygame.display.flip()
         clock.tick(60)
