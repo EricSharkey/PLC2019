@@ -2,6 +2,20 @@
 import sys, pygame
 pygame.init()
 
+
+class button(pygame.sprite.Sprite):
+    def __init__(self, callimage, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = callimage
+        self.rect = callimage.get_rect(topleft=(x, y))
+    def putimage(self, display):
+        display.blit(self.image,self.rect)
+    def clicked (self, pos):
+        return self.rect.collidepoint(pos)
+        
+    
+
+
 #Defining size of screen, speed, colors needed.
 size = width, height = 1280, 720
 speed = [2, 2]
@@ -19,7 +33,7 @@ display_width = 1280
 display_height = 720
 
 #Adding text to the top left of the outer window
-gameDisplay = pygame.display.set_mode((display_width,display_height))
+gamedisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Submarine Game Test, Version 1.0')
 
 
@@ -28,31 +42,27 @@ clock = pygame.time.Clock()
 #Defining start and quit button variables
 sbutton = pygame.image.load("SP_Start.png")
 
-def startbutton(x1,y1):
-    gameDisplay.blit(sbutton, (x1,y1))
 
 x1 = display_width * 0.3
 y1 = display_height * 0.1
 
 qbutton = pygame.image.load("SP_Quit.png")
 
-def quitbutton(x3,y3):
-    gameDisplay.blit(qbutton, (x3,y3))
 
 x3 = display_width * 0.3
 y3 = display_height * 0.7
 
 opbutton = pygame.image.load("SP_Options.png")
 
-def optionsbutton(x2,y2):
-    gameDisplay.blit(opbutton, (x2,y2))
 
 x2 = display_width * 0.3
 y2 = display_height * 0.4
 
-def button(msg,x,y,w,h,action=None):
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
+
+startbutton = button(sbutton, x1, y1)
+optionbutton = button(opbutton, x2, y2)
+quitbutton = button(qbutton, x3, y3)
+
 
 #Main function 
 def main():
@@ -63,9 +73,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
               print (event.pos)
               print (event.button)
-              if opbutton.get_rect(topleft=(x2,y2)).collidepoint(event.pos):
+              if optionbutton.clicked(event.pos):
                 print ("Options")
-              if opbutton.get_rect(topleft=(x3,y3)).collidepoint(event.pos):
+              if quitbutton.clicked(event.pos):
                 print ("Quit?")
                 pygame.quit()
                 return
@@ -73,14 +83,15 @@ def main():
         
         screen.fill(black)
         screen.blit(background, backgroundrect)
-        startbutton(x1,y1)
-        quitbutton(x3,y3)
-        optionsbutton(x2,y2)
+        startbutton.putimage(gamedisplay)
+        quitbutton.putimage(gamedisplay)
+        optionbutton.putimage(gamedisplay)
         pygame.display.flip()
         clock.tick(60)
 if __name__ == '__main__':
     main()
-    
+
+
 
 
 
