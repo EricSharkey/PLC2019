@@ -54,27 +54,12 @@ def button(msg,x,y,w,h,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
 
-<<<<<<< HEAD
-#Main function
-=======
 #Main function 
->>>>>>> 45d904fa9257f6ac79774c18db962318ecd16ba5
 def main():
     while 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-<<<<<<< HEAD
-        screen.fill(black)
-        screen.blit(background, backgroundrect)
-        startbutton(x1,y1)
-        quitbutton(x,y)
-        pygame.display.flip()
-        clock.tick(60)
-    
-if __name__== '__main__':
-    main()
-=======
             if event.type == pygame.MOUSEBUTTONDOWN:
               print (event.pos)
               print (event.button)
@@ -97,7 +82,5 @@ if __name__ == '__main__':
     main()
     
 
-
->>>>>>> 45d904fa9257f6ac79774c18db962318ecd16ba5
 
 
