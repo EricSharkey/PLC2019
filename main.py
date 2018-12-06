@@ -13,7 +13,18 @@ class button(pygame.sprite.Sprite):
     def clicked (self, pos):
         return self.rect.collidepoint(pos)
         
-    
+class main():
+    def __init__(self, display):
+        self.buttons=[]
+        self.rect =
+    def addbutton(self, button):
+        self.buttons.append(button)
+    def placebuttons(self, display):
+        for button in self.buttons:
+            button.putimage(display)
+    def call(self):
+        for button in self.button:
+            buttona.rect = button.image.get_rect(center=(
 
 
 #Defining size of screen, speed, colors needed.
@@ -66,6 +77,11 @@ quitbutton = button(qbutton, x3, y3)
 
 #Main function 
 def main():
+    stmenu = menu()
+    stmenu.addbutton(startbutton)
+    stmenu.addbutton(optionbutton)
+    stmenu.addbutton(quitbutton)
+        
     while 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -83,9 +99,7 @@ def main():
         
         screen.fill(black)
         screen.blit(background, backgroundrect)
-        startbutton.putimage(gamedisplay)
-        quitbutton.putimage(gamedisplay)
-        optionbutton.putimage(gamedisplay)
+        stmenu.placebuttons(gamedisplay)
         pygame.display.flip()
         clock.tick(60)
 if __name__ == '__main__':
