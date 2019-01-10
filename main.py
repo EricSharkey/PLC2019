@@ -4,27 +4,30 @@ pygame.init()
 
 
 class button(pygame.sprite.Sprite):
-    def __init__(self, callimage, x, y):
+    def __init__(self, callimage):
         pygame.sprite.Sprite.__init__(self)
         self.image = callimage
-        self.rect = callimage.get_rect(topleft=(x, y))
+        self.rect = callimage.get_rect()
     def putimage(self, display):
         display.blit(self.image,self.rect)
     def clicked (self, pos):
         return self.rect.collidepoint(pos)
         
-class main():
-    def __init__(self, display):
+class menu():
+    def __init__(self, x1, y1, x2, y2):
         self.buttons=[]
-        self.rect =[]
+        self.rect = pygame.Rect((x1, y1), (x2 - x1, y2 - y1))
     def addbutton(self, button):
         self.buttons.append(button)
     def placebuttons(self, display):
         for button in self.buttons:
             button.putimage(display)
-    def call(self):
-        for button in self.button:
-            buttona.rect = button.image.get_rect(center=(
+    def layout(self):
+        i = 1
+        for button in self.buttons:
+            button.rect.centerx = self.rect.centerx
+            button.rect.centery = self.rect.top + (self.rect.h/(len(self.buttons) + 1))*i
+            i+=1
 
 
 #Defining size of screen, speed, colors needed.
@@ -53,37 +56,24 @@ clock = pygame.time.Clock()
 #Defining start and quit button variables
 sbutton = pygame.image.load("SP_Start.png")
 
-
-x1 = display_width * 0.3
-y1 = display_height * 0.1
-
 qbutton = pygame.image.load("SP_Quit.png")
-
-
-x3 = display_width * 0.3
-y3 = display_height * 0.7
 
 opbutton = pygame.image.load("SP_Options.png")
 
 
-x2 = display_width * 0.3
-y2 = display_height * 0.4
-
-
-startbutton = button(sbutton, x1, y1)
-optionbutton = button(opbutton, x2, y2)
-quitbutton = button(qbutton, x3, y3)
-
+startbutton = button(sbutton)
+optionbutton = button(opbutton)
+quitbutton = button(qbutton)
 pygame.mixer.music.load("Untitled.wav")
 
 #Main function 
 def main():
-    stmenu = menu()
+    stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
     stmenu.addbutton(startbutton)
     stmenu.addbutton(optionbutton)
     stmenu.addbutton(quitbutton)
-
-pygame.mixer.music.play(loops=-1 start=0.0)
+    stmenu.layout()
+    pygame.mixer.music.play(loops=-1, start=0.0)
         
     while 1:
         for event in pygame.event.get():
