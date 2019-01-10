@@ -16,7 +16,7 @@ class button(pygame.sprite.Sprite):
 class main():
     def __init__(self, display):
         self.buttons=[]
-        self.rect =
+        self.rect =[]
     def addbutton(self, button):
         self.buttons.append(button)
     def placebuttons(self, display):
@@ -74,6 +74,7 @@ startbutton = button(sbutton, x1, y1)
 optionbutton = button(opbutton, x2, y2)
 quitbutton = button(qbutton, x3, y3)
 
+pygame.mixer.music.load("Untitled.wav")
 
 #Main function 
 def main():
@@ -81,6 +82,8 @@ def main():
     stmenu.addbutton(startbutton)
     stmenu.addbutton(optionbutton)
     stmenu.addbutton(quitbutton)
+
+pygame.mixer.music.play(loops=-1 start=0.0)
         
     while 1:
         for event in pygame.event.get():
