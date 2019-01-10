@@ -60,9 +60,11 @@ qbutton = pygame.image.load("SP_Quit.png")
 
 opbutton = pygame.image.load("SP_Options.png")
 
+
 startbutton = button(sbutton)
 optionbutton = button(opbutton)
 quitbutton = button(qbutton)
+pygame.mixer.music.load("Untitled.wav")
 
 
 
@@ -73,6 +75,7 @@ def main():
     stmenu.addbutton(optionbutton)
     stmenu.addbutton(quitbutton)
     stmenu.layout()
+    pygame.mixer.music.play(loops=-1, start=0.0)
         
     while 1:
         for event in pygame.event.get():
