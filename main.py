@@ -64,6 +64,8 @@ startbutton = button(sbutton)
 optionbutton = button(opbutton)
 quitbutton = button(qbutton)
 
+
+
 #Main function 
 def main():
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
@@ -79,6 +81,8 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
               print (event.pos)
               print (event.button)
+              if startbutton.clicked(event.pos):
+                print ("Start")
               if optionbutton.clicked(event.pos):
                 print ("Options")
               if quitbutton.clicked(event.pos):
