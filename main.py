@@ -35,6 +35,7 @@ size = width, height = 1280, 720
 speed = [2, 2]
 black = (0,0,0)
 white = (255,255,255)
+blue = (0,0,255)
 
 #Setting size of screen,
 screen = pygame.display.set_mode(size)
@@ -67,7 +68,33 @@ quitbutton = button(qbutton)
 pygame.mixer.music.load("Untitled.wav")
 
 
+#game function
+def game():
+    gmenu = menu(display_width * 0.75, display_height * 0.0, display_width * 1.0, display_height * 1.0)
+    gmenu.addbutton(startbutton)
+    gmenu.addbutton(optionbutton)
+    gmenu.addbutton(quitbutton)
+    gmenu.layout()
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.MOUSEBUTTONDOWN:
+              print (event.pos)
+              print (event.button)
+              if startbutton.clicked(event.pos):
+                game ()
+              if optionbutton.clicked(event.pos):
+                print ("Options")
+              if quitbutton.clicked(event.pos):
+                print ("Quit?")
+                return
 
+        screen.fill(blue)
+        gmenu.placebuttons(gamedisplay)
+        pygame.display.flip()
+        clock.tick(60)
+    
 #Main function 
 def main():
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
@@ -85,7 +112,7 @@ def main():
               print (event.pos)
               print (event.button)
               if startbutton.clicked(event.pos):
-                print ("Start")
+                game ()
               if optionbutton.clicked(event.pos):
                 print ("Options")
               if quitbutton.clicked(event.pos):
