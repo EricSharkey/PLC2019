@@ -52,26 +52,17 @@ gamedisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Submarine Game Test, Version 1.0')
 
 
-clock = pygame.time.Clock()
-
-#Defining start and quit button variables
 sbutton = pygame.image.load("SP_Start.png")
-
 qbutton = pygame.image.load("SP_Quit.png")
-
 opbutton = pygame.image.load("SP_Options.png")
-
-
-startbutton = button(sbutton)
-optionbutton = button(opbutton)
-quitbutton = button(qbutton)
-pygame.mixer.music.load("Untitled.wav")
+clock = pygame.time.Clock()
 
 
 #game function
 def game():
     gmenu = menu(display_width * 0.75, display_height * 0.0, display_width * 1.0, display_height * 1.0)
-    gmenu.addbutton(startbutton)
+    optionbutton = button(opbutton)
+    quitbutton = button(qbutton)
     gmenu.addbutton(optionbutton)
     gmenu.addbutton(quitbutton)
     gmenu.layout()
@@ -82,8 +73,6 @@ def game():
             if event.type == pygame.MOUSEBUTTONDOWN:
               print (event.pos)
               print (event.button)
-              if startbutton.clicked(event.pos):
-                game ()
               if optionbutton.clicked(event.pos):
                 print ("Options")
               if quitbutton.clicked(event.pos):
@@ -95,8 +84,14 @@ def game():
         pygame.display.flip()
         clock.tick(60)
     
-#Main function 
+#Main function  
 def main():
+    #Defining start and quit button variable
+    startbutton = button(sbutton)
+    optionbutton = button(opbutton)
+    quitbutton = button(qbutton)
+    pygame.mixer.music.load("Untitled.wav")
+
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
     stmenu.addbutton(startbutton)
     stmenu.addbutton(optionbutton)
