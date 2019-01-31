@@ -25,6 +25,8 @@ class menu():
     def layout(self):
         i = 1
         for button in self.buttons:
+            button.image = pygame.transform.smoothscale(button.image,(self.rect.w,int(self.rect.h/len(self.buttons))))
+            button.rect = button.image.get_rect()
             button.rect.centerx = self.rect.centerx
             button.rect.centery = self.rect.top + (self.rect.h/(len(self.buttons) + 1))*i
             i+=1
@@ -60,7 +62,7 @@ clock = pygame.time.Clock()
 
 #game function
 def game():
-    gmenu = menu(display_width * 0.75, display_height * 0.0, display_width * 1.0, display_height * 1.0)
+    gmenu = menu(display_width * 0.85, display_height * 0.0, display_width * 1.0, display_height * 1.0)
     optionbutton = button(opbutton)
     quitbutton = button(qbutton)
     gmenu.addbutton(optionbutton)
