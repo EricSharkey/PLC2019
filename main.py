@@ -23,13 +23,16 @@ class menu():
         for button in self.buttons:
             button.putimage(display)
     def layout(self):
-        i = 1
+        b = 0
+        n = len(self.buttons)
+        y1= (self.rect.top)
+        h = (self.rect.h)
         for button in self.buttons:
             button.image = pygame.transform.smoothscale(button.image,(self.rect.w,int(self.rect.h/len(self.buttons))))
             button.rect = button.image.get_rect()
             button.rect.centerx = self.rect.centerx
-            button.rect.centery = self.rect.top + (self.rect.h/(len(self.buttons) + 1))*i
-            i+=1
+            button.rect.centery = y1+(2*b+1)*h/(2*n)
+            b+=1
 
 
 #Defining size of screen, speed, colors needed.
