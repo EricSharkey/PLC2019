@@ -34,6 +34,15 @@ class menu():
             button.rect.centery = y1+(2*b+1)*h/(2*n)
             b+=1
 
+class sub(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.image = self.images[0]
+        self.rect = self.image.get_rect(topleft=(25,25))
+        self.origtop = self.rect.top
+        self.facing = -1
+    
+
 def increase():
         x0 = 25
         y0 = 25
@@ -78,7 +87,7 @@ sbutton = pygame.image.load("SP_Start.png")
 qbutton = pygame.image.load("SP_Quit.png")
 opbutton = pygame.image.load("SP_Options.png")
 clock = pygame.time.Clock()
-
+all = pygame.sprite.RenderUpdates()
 
 #game function
 def game():
@@ -88,6 +97,8 @@ def game():
     gmenu.addbutton(optionbutton)
     gmenu.addbutton(quitbutton)
     gmenu.layout()
+    sub.containers = all
+    Sub = sub()
     while 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -104,6 +115,8 @@ def game():
         screen.fill(blue)
         gmenu.placebuttons(gamedisplay)
         increase()
+        all.clear(screen, gamedisplay)
+        all.update()
         pygame.display.flip()
         clock.tick(60)
     
@@ -114,6 +127,8 @@ def main():
     optionbutton = button(opbutton)
     quitbutton = button(qbutton)
     pygame.mixer.music.load("Untitled.wav")
+    img = pygame.image.load("sub.png")
+    sub.images = [img, pygame.transform.flip(img, 1, 0)]
 
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
     stmenu.addbutton(startbutton)
