@@ -34,13 +34,30 @@ class menu():
             button.rect.centery = y1+(2*b+1)*h/(2*n)
             b+=1
 
+def increase():
+        x0 = 25
+        y0 = 25
+        s = 40
+        lh = 0
+        lv = 0
+        nh = 16
+        nv = 16
 
+        while (lh < nh):
+            pygame.draw.line(gamedisplay,white,(x0,y0+lh*s),(x0+(nv-1)*s,y0+lh*s),5)
+            lh+=1
+        while (lv < nv):    
+            pygame.draw.line(gamedisplay,white,(x0+lv*s,y0),(x0+lv*s,y0+(nh-1)*s),5)
+            lv+=1
+        
+        
 #Defining size of screen, speed, colors needed.
 size = width, height = 1280, 720
 speed = [2, 2]
 black = (0,0,0)
 white = (255,255,255)
 blue = (0,0,255)
+
 
 #Setting size of screen,
 screen = pygame.display.set_mode(size)
@@ -86,6 +103,7 @@ def game():
 
         screen.fill(blue)
         gmenu.placebuttons(gamedisplay)
+        increase()
         pygame.display.flip()
         clock.tick(60)
     
