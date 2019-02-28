@@ -35,22 +35,19 @@ class menu():
             b+=1
 
 class sub(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,x0,y0,s):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[0]
         self.rect = self.image.get_rect(topleft=(25,25))
         self.origtop = self.rect.top
         self.facing = -1
+        self.image = pygame.transform.smoothscale(self.image,(s,s))
+        
     
 
-def increase():
-        x0 = 25
-        y0 = 25
-        s = 40
+def grid(x0,y0,s,nh,nv):
         lh = 0
         lv = 0
-        nh = 16
-        nv = 16
 
         while (lh < nh):
             pygame.draw.line(gamedisplay,white,(x0,y0+lh*s),(x0+(nv-1)*s,y0+lh*s),5)
@@ -98,7 +95,13 @@ def game():
     gmenu.addbutton(quitbutton)
     gmenu.layout()
     sub.containers = all
-    Sub = sub()
+    x0 = 25
+    y0 = 25
+    s = 40
+    nh = 16
+    nv = 16
+    Sub = sub(x0,y0,s)
+    
     while 1:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -114,9 +117,10 @@ def game():
 
         screen.fill(blue)
         gmenu.placebuttons(gamedisplay)
-        increase()
+        grid(x0,y0,s,nh,nv)
         all.clear(screen, gamedisplay)
         all.update()
+        all.draw(gamedisplay)
         pygame.display.flip()
         clock.tick(60)
     
