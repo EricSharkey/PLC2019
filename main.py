@@ -38,24 +38,47 @@ class sub(pygame.sprite.Sprite):
     def __init__(self,x0,y0,s):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[0]
-        self.rect = self.image.get_rect(topleft=(25,25))
+        self.rect = self.image.get_rect(topleft=(x0,y0))
         self.origtop = self.rect.top
         self.facing = -1
         self.image = pygame.transform.smoothscale(self.image,(s,s))
-        
+    def move(self,x,y):
+        self.rect.topleft = (x,y)
+
+class grid():
+    x0 = 25
+    y0 = 25
+    s = 40
+    nh = 16
+    nv = 16
     
 
-def grid(x0,y0,s,nh,nv):
+    def __init__(self,x0,y0,s,nh,nv):
+        self.x0 = x0
+        self.y0 = y0
+        self.s = s
+        self.nh = nh
+        self.nv = nv
+    
+    def draw(self):
         lh = 0
-        lv = 0
-
-        while (lh < nh):
-            pygame.draw.line(gamedisplay,white,(x0,y0+lh*s),(x0+(nv-1)*s,y0+lh*s),5)
+        lv = 0    
+        while (lh < self.nh):
+            pygame.draw.line(gamedisplay,white,(self.x0,self.y0+lh*self.s),(self.x0+(self.nv-1)*self.s,self.y0+lh*self.s),5)
             lh+=1
-        while (lv < nv):    
-            pygame.draw.line(gamedisplay,white,(x0+lv*s,y0),(x0+lv*s,y0+(nh-1)*s),5)
+        while (lv < self.nv):    
+            pygame.draw.line(gamedisplay,white,(self.x0+lv*self.s,self.y0),(self.x0+lv*self.s,self.y0+(self.nh-1)*self.s),5)
             lv+=1
-        
+            
+    def gridcheck(self,x,y):
+        if x>=(self.x0) and x<=(self.x0+self.s*self.nh) and y>=(self.y0) and y<=(self.y0+self.s*self.nv):
+            return 1
+            return 0
+    
+    def squarenumber(self,x,y):
+        return int ((x - self.x0) / self.s), int ((y - self.y0) / self.s)  
+
+#pos - 25 / s convert to intger * s
         
 #Defining size of screen, speed, colors needed.
 size = width, height = 1280, 720
@@ -95,12 +118,8 @@ def game():
     gmenu.addbutton(quitbutton)
     gmenu.layout()
     sub.containers = all
-    x0 = 25
-    y0 = 25
-    s = 40
-    nh = 16
-    nv = 16
-    Sub = sub(x0,y0,s)
+    Sub = sub(25,25,40)
+    Grid = grid(25,25,40,16,16)
     
     while 1:
         for event in pygame.event.get():
@@ -114,13 +133,20 @@ def game():
               if quitbutton.clicked(event.pos):
                 print ("Quit?")
                 return
+              x=(event.pos[0])
+              y=(event.pos[1])
+              if Grid.gridcheck(x,y):
+                  print (Grid.squarenumber(x,y))
+                  Sub.move(x,y)
+              
+#pos - 25 / s convert to intger * s
 
         screen.fill(blue)
         gmenu.placebuttons(gamedisplay)
-        grid(x0,y0,s,nh,nv)
         all.clear(screen, gamedisplay)
         all.update()
         all.draw(gamedisplay)
+        Grid.draw()        
         pygame.display.flip()
         clock.tick(60)
     
