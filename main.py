@@ -63,20 +63,23 @@ class grid():
     def draw(self):
         lh = 0
         lv = 0    
-        while (lh < self.nh):
-            pygame.draw.line(gamedisplay,white,(self.x0,self.y0+lh*self.s),(self.x0+(self.nv-1)*self.s,self.y0+lh*self.s),5)
+        while (lh <= self.nh):
+            pygame.draw.line(gamedisplay,white,(self.x0,self.y0+lh*self.s),(self.x0+(self.nv)*self.s,self.y0+lh*self.s),5)
             lh+=1
-        while (lv < self.nv):    
-            pygame.draw.line(gamedisplay,white,(self.x0+lv*self.s,self.y0),(self.x0+lv*self.s,self.y0+(self.nh-1)*self.s),5)
+        while (lv <= self.nv):    
+            pygame.draw.line(gamedisplay,white,(self.x0+lv*self.s,self.y0),(self.x0+lv*self.s,self.y0+(self.nh)*self.s),5)
             lv+=1
             
     def gridcheck(self,x,y):
-        if x>=(self.x0) and x<=(self.x0+self.s*self.nh) and y>=(self.y0) and y<=(self.y0+self.s*self.nv):
+        if x>=(self.x0) and x<(self.x0+self.s*self.nh) and y>=(self.y0) and y<(self.y0+self.s*self.nv):
             return 1
             return 0
     
     def squarenumber(self,x,y):
         return int ((x - self.x0) / self.s), int ((y - self.y0) / self.s)  
+
+    def squarepos(self,xy):
+        return xy[0]*self.s+self.x0,xy[1]*self.s+self.y0
 
 #pos - 25 / s convert to intger * s
         
@@ -136,8 +139,9 @@ def game():
               x=(event.pos[0])
               y=(event.pos[1])
               if Grid.gridcheck(x,y):
-                  print (Grid.squarenumber(x,y))
-                  Sub.move(x,y)
+                  sn = Grid.squarenumber(x,y)
+                  squarepos = Grid.squarepos(sn)
+                  Sub.move(squarepos[0],squarepos[1])
               
 #pos - 25 / s convert to intger * s
 
