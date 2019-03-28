@@ -37,11 +37,14 @@ class menu():
 class sub(pygame.sprite.Sprite):
     def __init__(self,x0,y0,s):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.image = self.images[0]
+        self.images[0] = pygame.transform.smoothscale(self.images[0],(s,s))
+        self.images[1] = pygame.transform.smoothscale(self.images[1],(s,s))
+        self.images[2] = pygame.transform.smoothscale(self.images[2],(s,s))
+        self.images[3] = pygame.transform.smoothscale(self.images[3],(s,s))
+        self.image = self.images[0]        
         self.rect = self.image.get_rect(topleft=(x0,y0))
         self.origtop = self.rect.top
         self.facing = -1
-        self.image = pygame.transform.smoothscale(self.image,(s,s))
     def move(self,x,y):
         self.rect.topleft = (x,y)
 
@@ -142,7 +145,14 @@ def game():
                   sn = Grid.squarenumber(x,y)
                   squarepos = Grid.squarepos(sn)
                   Sub.move(squarepos[0],squarepos[1])
-              
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                Sub.image = Sub.images[0]
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                Sub.image = Sub.images[1]
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+                Sub.image = Sub.images[2]
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+                Sub.image = Sub.images[3]                
 #pos - 25 / s convert to intger * s
 
         screen.fill(blue)
@@ -162,7 +172,7 @@ def main():
     quitbutton = button(qbutton)
     pygame.mixer.music.load("Untitled.wav")
     img = pygame.image.load("sub.png")
-    sub.images = [img, pygame.transform.flip(img, 1, 0)]
+    sub.images = [img, pygame.transform.flip(img, 1, 0),pygame.transform.rotate(img, 90), pygame.transform.rotate(img,270)]
 
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
     stmenu.addbutton(startbutton)
