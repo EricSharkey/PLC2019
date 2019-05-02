@@ -2,6 +2,14 @@
 import sys, pygame
 pygame.init()
 
+#Defining size of screen, speed, colors needed.
+size = width, height = 1280, 720
+speed = [2, 2]
+black = (0,0,0)
+white = (255,255,255)
+blue = (0,0,255)
+red = (255,0,0)
+
 
 class button(pygame.sprite.Sprite):
     def __init__(self, callimage):
@@ -41,7 +49,7 @@ class sub(pygame.sprite.Sprite):
         self.images[1] = pygame.transform.smoothscale(self.images[1],(s,s))
         self.images[2] = pygame.transform.smoothscale(self.images[2],(s,s))
         self.images[3] = pygame.transform.smoothscale(self.images[3],(s,s))
-        self.image = self.images[0]        
+        self.image = self.images[0]
         self.rect = self.image.get_rect(topleft=(x0,y0))
         self.origtop = self.rect.top
         self.facing = -1
@@ -62,14 +70,23 @@ class grid():
         self.s = s
         self.nh = nh
         self.nv = nv
-    
+
+    def Hdraw(self,xy,r,):
+        pos = self.squarepos(xy)
+        posbox = pos[0]-self.s*(r-1),pos[1]-self.s*(r-1)
+        sizebox = r*self.s*2-1*self.s,r*self.s*2-1*self.s
+        pygame.draw.rect(gamedisplay,red,pygame.Rect(posbox,sizebox))
+        print (posbox,sizebox,xy)
+        
     def draw(self):
         lh = 0
-        lv = 0    
+        lv = 0
+        Xp = 0
+        Yp = 0
         while (lh <= self.nh):
             pygame.draw.line(gamedisplay,white,(self.x0,self.y0+lh*self.s),(self.x0+(self.nv)*self.s,self.y0+lh*self.s),5)
             lh+=1
-        while (lv <= self.nv):    
+        while (lv <= self.nv):
             pygame.draw.line(gamedisplay,white,(self.x0+lv*self.s,self.y0),(self.x0+lv*self.s,self.y0+(self.nh)*self.s),5)
             lv+=1
             
@@ -79,20 +96,17 @@ class grid():
             return 0
     
     def squarenumber(self,x,y):
-        return int ((x - self.x0) / self.s), int ((y - self.y0) / self.s)  
+        return int ((x - self.x0) / self.s), int ((y - self.y0) / self.s)
+
+    def squarenumbertuple(self,xy):
+        return int ((xy[0] - self.x0) / self.s), int ((xy[1] - self.y0) / self.s)
 
     def squarepos(self,xy):
         return xy[0]*self.s+self.x0,xy[1]*self.s+self.y0
 
-#pos - 25 / s convert to intger * s
+#     _______________
+#C = V(x1-x)+(y1-y)
         
-#Defining size of screen, speed, colors needed.
-size = width, height = 1280, 720
-speed = [2, 2]
-black = (0,0,0)
-white = (255,255,255)
-blue = (0,0,255)
-
 
 #Setting size of screen,
 screen = pygame.display.set_mode(size)
@@ -139,6 +153,8 @@ def game():
     Grid = grid(25,25,40,16,16)
     
     while 1:
+        screen.fill(blue)
+        all.clear(screen, gamedisplay)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -150,6 +166,8 @@ def game():
               if quitbutton.clicked(event.pos):
                 print ("Quit?")
                 return
+              if Mbutton.clicked(event.pos):
+                  Grid.Hdraw(Grid.squarenumbertuple(Sub.rect.topleft), 3)
               x=(event.pos[0])
               y=(event.pos[1])
               if Grid.gridcheck(x,y):
@@ -166,10 +184,11 @@ def game():
                 Sub.image = Sub.images[3]                
 #pos - 25 / s convert to intger * s
 
-        screen.fill(blue)
+#     _______________
+#C = V(x1-x)+(y1-y)                
+
         gmenu.placebuttons(gamedisplay)
         amenu.placebuttons(gamedisplay)
-        all.clear(screen, gamedisplay)
         all.update()
         all.draw(gamedisplay)
         Grid.draw()        
