@@ -151,10 +151,14 @@ def game():
     sub.containers = all
     Sub = sub(25,25,40)
     Grid = grid(25,25,40,16,16)
+    redon = 0
+    r = 3
     
     while 1:
         screen.fill(blue)
         all.clear(screen, gamedisplay)
+        if redon==1:
+          Grid.Hdraw(Grid.squarenumbertuple(Sub.rect.topleft), r)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -167,13 +171,16 @@ def game():
                 print ("Quit?")
                 return
               if Mbutton.clicked(event.pos):
-                  Grid.Hdraw(Grid.squarenumbertuple(Sub.rect.topleft), 3)
+                  redon=1
               x=(event.pos[0])
               y=(event.pos[1])
-              if Grid.gridcheck(x,y):
+              if redon == 1 and Grid.gridcheck(x,y):
                   sn = Grid.squarenumber(x,y)
+                  SubN = Grid.squarenumbertuple(Sub.rect.topleft)
                   squarepos = Grid.squarepos(sn)
-                  Sub.move(squarepos[0],squarepos[1])
+                  if SubN[0]-sn[0] <= r and SubN[1]-sn[1] <= r and sn[0]-SubN[0] <= r and sn[1]-SubN[1] <= r:
+                    Sub.move(squarepos[0],squarepos[1])
+                    redon = 0
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 Sub.image = Sub.images[0]
             if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
