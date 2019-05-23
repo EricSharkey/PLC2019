@@ -52,7 +52,21 @@ class sub(pygame.sprite.Sprite):
         self.image = self.images[0]
         self.rect = self.image.get_rect(topleft=(x0,y0))
         self.origtop = self.rect.top
-        self.facing = -1
+        self.facing = 0
+    def move(self,x,y):
+        self.rect.topleft = (x,y)
+
+class Torpedo(pygame.sprite.Sprite):
+    def __init__(self,s,sub):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.images[0] = pygame.transform.smoothscale(self.images[0],(s,s))
+        self.images[1] = pygame.transform.smoothscale(self.images[1],(s,s))
+        self.images[2] = pygame.transform.smoothscale(self.images[2],(s,s))
+        self.images[3] = pygame.transform.smoothscale(self.images[3],(s,s))
+        self.image = self.images[0]
+        self.rect = sub.rect
+        self.origtop = self.rect.top
+        self.facing = sub.facing    
     def move(self,x,y):
         self.rect.topleft = (x,y)
 
@@ -185,6 +199,9 @@ def game():
                 return
               if Mbutton.clicked(event.pos):
                   redon=1
+              if Tbutton.clicked(event.pos):
+                  Torpedo.containers=all
+                  TPDO = Torpedo(40,Sub)
               x=(event.pos[0])
               y=(event.pos[1])
               if redon == 1 and Grid.gridcheck(x,y):
@@ -196,12 +213,16 @@ def game():
                     redon = 0
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 Sub.image = Sub.images[0]
+                Sub.facing = 0
             if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 Sub.image = Sub.images[1]
+                Sub.facing = 1
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 Sub.image = Sub.images[2]
+                Sub.facing = 2
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-                Sub.image = Sub.images[3]                
+                Sub.image = Sub.images[3]
+                Sub.facing = 3
 #pos - 25 / s convert to intger * s
 
 #     _______________
@@ -224,7 +245,8 @@ def main():
     pygame.mixer.music.load("Untitled.wav")
     img = pygame.image.load("sub.png")
     sub.images = [img, pygame.transform.flip(img, 1, 0),pygame.transform.rotate(img, 90), pygame.transform.rotate(img,270)]
-
+    Torpedo.images = [torpedo, pygame.transform.flip(torpedo, 1, 0),pygame.transform.rotate(torpedo, 90), pygame.transform.rotate(torpedo,270)]
+    
     stmenu = menu(display_width * 0.3, display_height * 0.0, display_width * 0.7, display_height * 1.0)
     stmenu.addbutton(startbutton)
     stmenu.addbutton(optionbutton)
