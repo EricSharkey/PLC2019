@@ -73,10 +73,22 @@ class grid():
 
     def Hdraw(self,xy,r,):
         pos = self.squarepos(xy)
-        posbox = pos[0]-self.s*(r-1),pos[1]-self.s*(r-1)
-        sizebox = r*self.s*2-1*self.s,r*self.s*2-1*self.s
-        pygame.draw.rect(gamedisplay,red,pygame.Rect(posbox,sizebox))
-        print (posbox,sizebox,xy)
+        xmax=self.x0+self.s*self.nh
+        ymax=self.y0+self.s*self.nv
+        Leftbox = pos[0]-self.s*(r-1)
+        Topbox = pos[1]-self.s*(r-1)
+        Rightbox = pos[0]+self.s*(r)
+        Bottombox = pos[1]+self.s*(r)
+        if Rightbox>xmax:
+            Rightbox=xmax  
+        if Bottombox>ymax:
+            Bottombox=ymax
+        if Leftbox<self.x0:
+            Leftbox=self.x0
+        if Topbox<self.y0:
+            Topbox=self.y0
+        pygame.draw.rect(gamedisplay,red,pygame.Rect(Leftbox,Topbox,Rightbox-Leftbox,Bottombox-Topbox))
+
         
     def draw(self):
         lh = 0
@@ -169,6 +181,7 @@ def game():
                 print ("Options")
               if quitbutton.clicked(event.pos):
                 print ("Quit?")
+                Sub.kill()
                 return
               if Mbutton.clicked(event.pos):
                   redon=1
